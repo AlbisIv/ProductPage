@@ -1,0 +1,62 @@
+.mainContainer {
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+  width: 306px;
+  height: 256px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 28px 24px 24px 24px;
+  gap: 12px;
+}
+
+.gray14 {
+  color: #999999;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.price {
+  margin-top: -4px;
+  color: #333333;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.shipto__price {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time__box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  border-radius: 20px;
+  text-align: center;
+  font-size: 14px;
+  width: 258px;
+  height: 40px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    opacity: 0.8;
+  }
+  &:active {
+    transform: scale(0.97);
+  }
+}
+.btn__primary {
+  border: none;
+  background-color: #ff6600;
+  color: #ffffff;
+}
+
+.btn__secondary {
+  border: 1px solid #ff6600;
+  background-color: #ffffff;
+  color: #ff6600;
+}
