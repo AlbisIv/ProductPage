@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ProductImage = (props: any) => {
   const { data } = props;
   return (

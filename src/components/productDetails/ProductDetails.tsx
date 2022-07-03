@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductModel from '../../models/ProductModel';
 import styles from './ProductDetails.module.scss';
 import check from '../../icons/check.png';

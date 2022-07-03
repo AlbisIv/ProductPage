@@ -1,15 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import './App.scss';
 import ProductDetails from './components/productDetails/ProductDetails';
 import ProductImage from './components/productImage/ProductImage';
 import ProductShipping from './components/productShipping/ProductShipping';
-import ProductModel from './models/ProductModel';
 import fetchData from './services/ProductService';
 
 const App = () => {
-  const [statusMessage, setStatusMessage] = useState();
-
   const { data, status } = useQuery('product-data', fetchData);
 
   if (status === 'loading') {
