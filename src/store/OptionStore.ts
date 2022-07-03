@@ -1,30 +1,22 @@
+/* eslint-disable camelcase */
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-// interface BearState {
-//   bears: number
+interface OptionState {
+  '1080p': number,
+  '4k': number,
+  battery_accessories: number,
 
-//   increase: (by: number) => void
-// }
+  addOptionCount: (by: number, option:string) => void
+}
 
-// const useStore = create<BearState>()(
-//   persist((set) => ({
-//     bears: 0,
-//     increase: () => set((state) => ({ bears: state.bears + 1 })),
-//   })),
-// );
+const useStore = create<OptionState>()(
+  persist((set) => ({
+    '1080p': 0,
+    '4k': 0,
+    battery_accessories: 0,
+    addOptionCount: (by, option) => (set({ [option]: by })),
+  })),
+);
 
-// const useOptions = create<{
-//   options: {
-//     [key: string]: number;
-//   }
-// }>(set) => ({
-//   options: {
-
-//   },
-//   setOption: (key: string, value: number) => set(state => ({
-//     options: {
-//       ...options,
-//     }
-//   })),
-// })
+export default useStore;

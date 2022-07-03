@@ -1,12 +1,20 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
-import { useStore } from 'zustand';
+import React, { useEffect, useState } from 'react';
+import useStore from '../../store/OptionStore';
 import styles from './OptionAdder.module.scss';
 
-const OptionAdder = () => {
-//   const state = useStore((state:State) => state);
+const OptionAdder = (props:any) => {
+  const optionProp = props;
+  const addOption = useStore((state) => state.addOptionCount);
   const [inputValue, setInputValue] = useState(0);
-  const a = 5;
+
+  const addOptionByCount = (by:number, option:string) => {
+    addOption(by, option);
+  };
+
+  useEffect(() => {
+    addOptionByCount(inputValue, optionProp.optionName);
+  }, [inputValue]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
@@ -17,6 +25,7 @@ const OptionAdder = () => {
       setInputValue(value);
     }
   };
+
   return (
     <div className={styles.input__container}>
       <button

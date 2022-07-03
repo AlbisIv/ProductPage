@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
+import useStore from '../../store/OptionStore';
 import ProductModel from '../../models/ProductModel';
 import styles from './ProductShipping.module.scss';
 import gray_info from '../../icons/gray_info.png';
@@ -8,6 +9,7 @@ import gray_info from '../../icons/gray_info.png';
 const ProductShipping = (prop:ProductModel) => {
   const {
     product: {
+      options,
       shipping: {
         method: {
           country, title, shipping_time, cost,
@@ -15,10 +17,88 @@ const ProductShipping = (prop:ProductModel) => {
       },
     },
   } = prop;
+
+  const optionState = useStore((state) => state);
+
   return (
     <div
       className={styles.mainContainer}
     >
+
+      <div>
+        {optionState['1080p'] > 0 && (
+          <div className={styles.option__container}>
+            <b className={styles.gray14}>{options['1080p'].label}</b>
+            <br />
+            <span className={styles.gray14}>
+              {options['1080p'].price.currency.symbol}
+              {' '}
+              {options['1080p'].price.value}
+              {' '}
+              x
+              {' '}
+              {optionState['1080p']}
+            </span>
+            <b className={styles.gray14}>
+              =
+              {' '}
+              {options['1080p'].price.currency.symbol}
+              {' '}
+              {Number((optionState['1080p'] * options['1080p'].price.value).toFixed(2)).toLocaleString('en-US')}
+            </b>
+          </div>
+        )}
+
+        {optionState['4k'] > 0 && (
+          <div className={styles.option__container}>
+            <b className={styles.gray14}>
+              {options['4k'].label}
+            </b>
+
+            <br />
+            <span className={styles.gray14}>
+              {options['4k'].price.currency.symbol}
+              {' '}
+              {options['4k'].price.value}
+              {' '}
+              x
+              {' '}
+              {optionState['4k']}
+            </span>
+            <b className={styles.gray14}>
+              =
+              {' '}
+              {options['4k'].price.currency.symbol}
+              {' '}
+              {Number((optionState['4k'] * options['4k'].price.value).toFixed(2)).toLocaleString('en-US')}
+            </b>
+          </div>
+        )}
+
+        {optionState.battery_accessories > 0 && (
+          <div className={styles.option__container}>
+            <b className={styles.gray14}>{options.battery_accessories.label.slice(0, 7)}</b>
+            <span className={styles.gray14}>
+              {options.battery_accessories.price.currency.symbol}
+              {' '}
+              {options.battery_accessories.price.value}
+              {' '}
+              x
+              {' '}
+              {optionState.battery_accessories}
+            </span>
+            <b className={styles.gray14}>
+              =
+              {' '}
+              {options.battery_accessories.price.currency.symbol}
+              {' '}
+              {Number((optionState.battery_accessories * options.battery_accessories.price.value)
+                .toFixed(2)).toLocaleString('en-US')}
+            </b>
+          </div>
+        )}
+      </div>
+
       <div className={styles.shipto__price}>
         <div>
           <span className={styles.gray14}>
@@ -59,7 +139,6 @@ const ProductShipping = (prop:ProductModel) => {
           </b>
         </span>
         <Tooltip title={shipping_time.info}><img src={gray_info} alt="info" width="14px" height="14px" /></Tooltip>
-
       </div>
 
       <button className={`${styles.btn}  ${styles.btn__primary}`}>Login to Purchase</button>

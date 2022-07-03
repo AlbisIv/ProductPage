@@ -11,12 +11,15 @@ const App = () => {
   const [statusMessage, setStatusMessage] = useState();
 
   const { data, status } = useQuery('product-data', fetchData);
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
+
   if (status === 'error') {
     return <div>Error!</div>;
   }
+
   return (
     <div className="App">
       <div className="container">
@@ -50,7 +53,6 @@ const App = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

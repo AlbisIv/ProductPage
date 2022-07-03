@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductModel from '../../models/ProductModel';
 import styles from './ProductDetails.module.scss';
 import check from '../../icons/check.png';
@@ -14,33 +14,47 @@ import mastercard from '../../icons/mastercard.svg';
 import apple_pay from '../../icons/apple_pay.svg';
 import OptionAdder from '../optionAdder/OptionAdder';
 
-// TODO Pielikt slidera loģiku
-// TODO pielikt taimera loģiku
-// TODO pielikt input loģiku (uztaisīt atsevišķu komponenti un mainīt cenu)
-// TODO Pielikt komatu, ja cena ir virs 3 cipariem
-
 const ProductDetails = (prop: ProductModel) => {
   const {
     product: {
       name, tags,
       options,
-
       discount,
       reviews: { rating, count, total_buyers },
       shipping: { props: { ready_to_ship, in_stock, fast_dispatch } },
     },
   } = prop;
 
-  const starArray = [];
+  const [starArray, setStarArray] = useState<string[]>([]);
+  const [newPrices, setNewPrices] = useState<number[]>([]);
+  const [oldPrices, setOldPrices] = useState<number[]>([]);
 
-  // A function that fills starArray with full/half/empty stars
+  const starHandler = () => {
+    const resArray = [];
+    for (let i = 0; i < Math.floor(rating); i += 1) {
+      resArray.push('full');
+    }
+    if (rating % 1 !== 0) {
+      resArray.push('half');
+    }
+    setStarArray(resArray);
+  };
 
-  for (let i = 0; i < Math.floor(rating); i += 1) {
-    starArray.push('full');
-  }
-  if (rating % 1 !== 0) {
-    starArray.push('half');
-  }
+  const priceHandler = () => {
+    const newPriceArr: number[] = [];
+    const oldPriceArr: number[] = [];
+    Object.keys(options).forEach((key) => {
+      newPriceArr.push(options[key].price.value);
+      oldPriceArr.push(options[key].old_price.value);
+    });
+    setNewPrices(newPriceArr);
+    setOldPrices(oldPriceArr);
+  };
+
+  useEffect(() => {
+    starHandler();
+    priceHandler();
+  }, [rating, options]);
 
   const discountEndDate = new Date(discount.end_date);
   const updateTimer = () => {
@@ -52,13 +66,6 @@ const ProductDetails = (prop: ProductModel) => {
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
     return `${days}d:${hours}h:${minutes}m:${seconds}s`;
   };
-
-  const newPrices: number[] = [];
-  const oldPrices: number[] = [];
-  Object.keys(options).forEach((key) => {
-    newPrices.push(options[key].price.value);
-    oldPrices.push(options[key].old_price.value);
-  });
 
   return (
     <div className={styles.mainContainer}>
@@ -113,31 +120,34 @@ const ProductDetails = (prop: ProductModel) => {
       </div>
 
       <div className={styles.priceRange}>
-        <div>
-          <span className={styles.new__price}>
-            {options['1080p'].price.currency.symbol}
-            {' '}
-            {newPrices.sort((a, b) => a - b)[0].toFixed(2)}
-            {' '}
-            -
-            {' '}
-            {options['1080p'].price.currency.symbol}
-            {' '}
-            {newPrices.sort((a, b) => b - a)[0].toFixed(2)}
-          </span>
-          <br />
-          <span className={styles.old__price}>
-            {options['1080p'].price.currency.symbol}
-            {' '}
-            {oldPrices.sort((a, b) => a - b)[0].toFixed(2)}
-            {' '}
-            -
-            {' '}
-            {options['1080p'].price.currency.symbol}
-            {' '}
-            {oldPrices.sort((a, b) => b - a)[0].toLocaleString('en-US')}
-          </span>
-        </div>
+        {newPrices.length > 0 && (
+          <div>
+            <span className={styles.new__price}>
+              {options['1080p'].price.currency.symbol}
+              {' '}
+              {newPrices.sort((a, b) => a - b)[0].toFixed(2)}
+              {' '}
+              -
+              {' '}
+              {options['1080p'].price.currency.symbol}
+              {' '}
+              {newPrices.sort((a, b) => b - a)[0].toFixed(2)}
+            </span>
+            <br />
+            <span className={styles.old__price}>
+              {options['1080p'].price.currency.symbol}
+              {' '}
+              {oldPrices.sort((a, b) => a - b)[0].toFixed(2)}
+              {' '}
+              -
+              {' '}
+              {options['1080p'].price.currency.symbol}
+              {' '}
+              {oldPrices.sort((a, b) => b - a)[0].toLocaleString('en-US')}
+            </span>
+          </div>
+        )}
+
         <div>
           <span className={styles.gray14}>/ Option</span>
           <span className={styles.line}> | </span>
@@ -187,11 +197,10 @@ const ProductDetails = (prop: ProductModel) => {
                   {options[key].price.value}
                 </span>
               </div>
-              <OptionAdder />
+              <OptionAdder optionName={key} />
             </div>
           ))}
         </div>
-
       </div>
 
       <div className={styles.protect}>
@@ -203,12 +212,10 @@ const ProductDetails = (prop: ProductModel) => {
       </div>
 
       <div className={styles.payments}>
-
         <span className={styles.gray12}>
           Payments:
         </span>
         <img src={visa} alt="visa" />
-
         <img src={mastercard} alt="mastercard" />
         <img src={apple_pay} alt="apple pay" />
       </div>

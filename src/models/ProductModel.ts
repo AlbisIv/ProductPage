@@ -23,6 +23,7 @@ interface ProductModel {
 interface Gallery {
     main: string,
 }
+
 interface ShippingProps{
     ready_to_ship: boolean,
     in_stock: boolean,
@@ -73,4 +74,5 @@ interface Currency{
     symbol: string,
     format: string,
 }
+
 export default ProductModel;
