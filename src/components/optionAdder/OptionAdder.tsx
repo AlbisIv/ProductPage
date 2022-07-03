@@ -8,7 +8,6 @@ const OptionAdder = () => {
   const [inputValue, setInputValue] = useState(0);
   const a = 5;
 
-  // A function that handles input to be a positive number
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     if (!value) {

@@ -135,7 +135,7 @@ const ProductDetails = (prop: ProductModel) => {
             {' '}
             {options['1080p'].price.currency.symbol}
             {' '}
-            {oldPrices.sort((a, b) => b - a)[0].toFixed(2)}
+            {oldPrices.sort((a, b) => b - a)[0].toLocaleString('en-US')}
           </span>
         </div>
         <div>

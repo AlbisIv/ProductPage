@@ -36,7 +36,7 @@ const ProductShipping = (prop:ProductModel) => {
             </u>
           </Tooltip>
         </div>
-        <span className={styles.price}>{cost.value.toFixed(2)}</span>
+        <span className={styles.price}>{Number(cost.value.toFixed(2)).toLocaleString('en-US')}</span>
       </div>
 
       <div className={styles.time__box}>
