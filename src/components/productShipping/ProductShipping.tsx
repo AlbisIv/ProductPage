@@ -27,9 +27,12 @@ const ProductShipping = (prop:ProductModel) => {
       <div>
         {optionState['1080p'] > 0 && (
           <div className={styles.option__container}>
-            <b className={styles.gray14}>{options['1080p'].label}</b>
+            <div className={styles.option__left}>
+              <b className={styles.gray14}>{options['1080p'].label}</b>
+            </div>
             <br />
-            <span className={styles.gray14}>
+
+            <span className={styles.option__middle}>
               {options['1080p'].price.currency.symbol}
               {' '}
               {options['1080p'].price.value}
@@ -38,7 +41,8 @@ const ProductShipping = (prop:ProductModel) => {
               {' '}
               {optionState['1080p']}
             </span>
-            <b className={styles.gray14}>
+
+            <b className={styles.option__right}>
               =
               {' '}
               {options['1080p'].price.currency.symbol}
@@ -50,12 +54,14 @@ const ProductShipping = (prop:ProductModel) => {
 
         {optionState['4k'] > 0 && (
           <div className={styles.option__container}>
-            <b className={styles.gray14}>
-              {options['4k'].label}
-            </b>
-
+            <div className={styles.option__left}>
+              <b className={styles.gray14}>
+                {options['4k'].label}
+              </b>
+            </div>
             <br />
-            <span className={styles.gray14}>
+
+            <span className={styles.option__middle}>
               {options['4k'].price.currency.symbol}
               {' '}
               {options['4k'].price.value}
@@ -64,7 +70,8 @@ const ProductShipping = (prop:ProductModel) => {
               {' '}
               {optionState['4k']}
             </span>
-            <b className={styles.gray14}>
+
+            <b className={styles.option__right}>
               =
               {' '}
               {options['4k'].price.currency.symbol}
@@ -76,8 +83,11 @@ const ProductShipping = (prop:ProductModel) => {
 
         {optionState.battery_accessories > 0 && (
           <div className={styles.option__container}>
-            <b className={styles.gray14}>{options.battery_accessories.label.slice(0, 7)}</b>
-            <span className={styles.gray14}>
+            <div className={styles.option__left}>
+              <b className={styles.gray14}>{options.battery_accessories.label.slice(0, 7)}</b>
+            </div>
+
+            <span className={styles.option__middle}>
               {options.battery_accessories.price.currency.symbol}
               {' '}
               {options.battery_accessories.price.value}
@@ -86,7 +96,7 @@ const ProductShipping = (prop:ProductModel) => {
               {' '}
               {optionState.battery_accessories}
             </span>
-            <b className={styles.gray14}>
+            <b className={styles.option__right}>
               =
               {' '}
               {options.battery_accessories.price.currency.symbol}
